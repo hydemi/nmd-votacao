@@ -1,0 +1,8 @@
+{
+  "name": "CAB Votação Ágil",
+  "description": "Interface de votação rápida e intuitiva para o Conselho Consultivo de Mudanças (CAB) com protótipos de triagem ágil, cockpit de fim de semana e governança colegiada.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

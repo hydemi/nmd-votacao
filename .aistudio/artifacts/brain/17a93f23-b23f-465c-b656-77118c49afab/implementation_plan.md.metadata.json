@@ -1,0 +1,6 @@
+{
+  "summary":  "Plano de implementação detalhado para os protótipos de votação rápida do CAB (Conselho Consultivo de Mudanças) com três interfaces especializadas (Fila Rápida com Hotkeys, Cockpit de Fim de Semana com Timeline e Painel Kanban de Governança), alternador de papéis entre as 7 áreas técnicas, tabelas agrupadas por categoria técnica e plano de rollback transparente.",
+  "updatedAt":  "2026-10-01T21:46:59.917757929Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}
