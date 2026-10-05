@@ -1,6 +1,6 @@
 {
-  "summary":  "Plano de implementação detalhado para os protótipos de votação rápida do CAB (Conselho Consultivo de Mudanças) com três interfaces especializadas (Fila Rápida com Hotkeys, Cockpit de Fim de Semana com Timeline e Painel Kanban de Governança), alternador de papéis entre as 7 áreas técnicas, tabelas agrupadas por categoria técnica e plano de rollback transparente.",
-  "updatedAt":  "2026-10-01T21:46:59.917757929Z",
+  "summary":  "Plano detalhado de implementação para a Tela da Ata da Reunião da Comissão de Mudanças (CAB - Banco BRB), contemplando cabeçalho formal com representantes votantes das 7 áreas, lista de implantações apreciadas com tarefas e ressalvas, mapa de riscos elaborado pela equipe de mudanças, agenda executiva de implantação e suporte a exportação/impressão em PDF.",
+  "updatedAt":  "2026-10-05T21:34:57.210468263Z",
   "requestFeedback":  true,
   "userFacing":  true
 }

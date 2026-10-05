@@ -1,0 +1,65 @@
+import { CABMeetingMinutes } from '../types/cab';
+
+export const INITIAL_MEETING_MINUTES: CABMeetingMinutes = {
+  numeroAta: '042/2026',
+  ano: 2026,
+  dataRealizacao: '09 de Outubro de 2026 (Sexta-feira)',
+  horarioInicio: '14:30',
+  horarioTermino: '17:30',
+  local: 'Edifício Sede BRB - Sala de Governança de TI (7º Andar) e Videoconferência Híbrida Teams',
+  coordenadorGeral: 'Carlos Eduardo Mendes (Gerência de Gestão de Mudanças - GEMUD)',
+  secretarioExecutivo: 'Thiago Albuquerque Ribeiro (Especialista em Governança de TI)',
+  pauta: 'Deliberação colegiada, análise técnica de atividades, avaliação matricial de riscos e aprovação da agenda de implantações críticas programadas para a janela de fim de semana de 10 e 11 de Outubro de 2026.',
+  parecerGeral: 'A Comissão Consultiva de Mudanças (CAB), no uso de suas atribuições regimentais e em estrita conformidade com as diretrizes de governança e segurança da informação do Banco BRB, apreciou a totalidade das 8 (oito) solicitações de mudança submetidas para a janela de fim de semana. Das demandas avaliadas, 7 (sete) foram APROVADAS (sendo 3 aprovadas sob estrita observância das ressalvas e condicionantes técnicas lavradas nesta ata) e 1 (uma) demanda foi BLOQUEADA (CHG-2026-0846) devido a veto fundamentado por concorrência de I/O em subsistema de banco de dados crítico.',
+  representantes: [
+    {
+      area: 'GEMUD',
+      nome: 'Carlos Eduardo Mendes',
+      cargo: 'Gerente de Gestão de Mudanças (Coordenador da Sessão)',
+      presencaConfirmada: true,
+      horarioRegistro: '14:25',
+    },
+    {
+      area: 'GETIS',
+      nome: 'Juliana Pires Fontes',
+      cargo: 'Gerente de TI e Segurança da Informação',
+      presencaConfirmada: true,
+      horarioRegistro: '14:28',
+    },
+    {
+      area: 'GEMOL',
+      nome: 'Rogério Dantas Silveira',
+      cargo: 'Gerente de Operações e Logística de TI',
+      presencaConfirmada: true,
+      horarioRegistro: '14:30',
+    },
+    {
+      area: 'GMIB',
+      nome: 'Hélio Castro Vasconcelos',
+      cargo: 'Gerente de Mudanças e Infraestrutura Básica',
+      presencaConfirmada: true,
+      horarioRegistro: '14:27',
+    },
+    {
+      area: 'GEDAN',
+      nome: 'Priscila Novaes Lima',
+      cargo: 'Gerente de Dados, Analytics e Banco de Dados',
+      presencaConfirmada: true,
+      horarioRegistro: '14:30',
+    },
+    {
+      area: 'GEROP',
+      nome: 'Alexandre Prado Meireles',
+      cargo: 'Gerente de Redes e Operações de Telecomunicações',
+      presencaConfirmada: true,
+      horarioRegistro: '14:31',
+    },
+    {
+      area: 'SUDEC',
+      nome: 'Valéria Rios Albuquerque',
+      cargo: 'Superintendente de Desenvolvimento e Clientes',
+      presencaConfirmada: true,
+      horarioRegistro: '14:29',
+    },
+  ],
+};

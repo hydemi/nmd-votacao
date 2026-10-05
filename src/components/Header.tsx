@@ -1,32 +1,41 @@
 import React, { useState } from 'react';
 import { CABArea, CAB_AREAS_INFO } from '../types/cab';
 import { 
+  Zap, 
   ChevronDown, 
   Check, 
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  FileText,
+  Printer
 } from 'lucide-react';
 
 interface HeaderProps {
+  currentView: 'triage' | 'minutes';
+  onViewChange: (view: 'triage' | 'minutes') => void;
   currentArea: CABArea;
   onAreaChange: (area: CABArea) => void;
   pendingVotesCount: number;
   totalChangesCount: number;
+  onPrintMinutes: () => void;
 }
 
 const CAB_AREAS_LIST: CABArea[] = ['GEMUD', 'GETIS', 'GEMOL', 'GMIB', 'GEDAN', 'GEROP', 'SUDEC'];
 
 export const Header: React.FC<HeaderProps> = ({
+  currentView,
+  onViewChange,
   currentArea,
   onAreaChange,
   pendingVotesCount,
   totalChangesCount,
+  onPrintMinutes,
 }) => {
   const [isAreaDropdownOpen, setIsAreaDropdownOpen] = useState(false);
   const completedVotesCount = totalChangesCount - pendingVotesCount;
 
   return (
-    <header className="sticky top-0 z-40 bg-[#003882] text-white border-b border-[#002A66] shadow-md">
+    <header className="sticky top-0 z-40 bg-[#003882] text-white border-b border-[#002A66] shadow-md print:hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
         {/* Zone 1: Wordmark / Brand title - BRB Identity */}
         <div className="flex items-center gap-3 shrink-0">
@@ -35,30 +44,66 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <div>
             <div className="text-sm font-bold tracking-tight text-white flex items-center gap-2">
-              <span>BRB · CAB Votação Ágil</span>
+              <span>BRB · Gestão de Mudanças</span>
               <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#002860] text-sky-200 border border-sky-400/30">
-                Speed Triage
+                CAB
               </span>
             </div>
             <div className="text-[11px] text-sky-200/90 font-medium">
-              Banco de Brasília · Conselho Consultivo de Mudanças
+              Banco de Brasília · Janela de Fim de Semana
             </div>
           </div>
         </div>
 
-        {/* Zone 2: Fast Stats / Deliberation Progress */}
-        <div className="hidden md:flex items-center gap-4 text-xs">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-[#002860] border border-sky-400/30 rounded-lg text-sky-100">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="text-sky-200">Progresso de {currentArea}:</span>
-            <span className="font-mono font-bold text-white">
-              {completedVotesCount}/{totalChangesCount} deliberadas
-            </span>
-          </div>
+        {/* Zone 2: Navigation Switcher between Triage & Meeting Minutes */}
+        <div className="flex items-center p-1 bg-[#002860] border border-sky-400/30 rounded-lg text-xs">
+          <button
+            onClick={() => onViewChange('triage')}
+            className={`px-3 py-1.5 rounded-md font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+              currentView === 'triage'
+                ? 'bg-white text-[#003882] shadow-sm'
+                : 'text-sky-200 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5" />
+            <span>Fila Rápida (Speed Triage)</span>
+          </button>
+
+          <button
+            onClick={() => onViewChange('minutes')}
+            className={`px-3 py-1.5 rounded-md font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+              currentView === 'minutes'
+                ? 'bg-white text-[#003882] shadow-sm'
+                : 'text-sky-200 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <FileText className="w-3.5 h-3.5" />
+            <span>Ata da Reunião (Nº 042/2026)</span>
+          </button>
         </div>
 
-        {/* Zone 3: Active Area Selector & User Controls */}
+        {/* Zone 3: Actions, Voter Identity & Controls */}
         <div className="flex items-center gap-2.5">
+          {/* Print PDF Button for Meeting Minutes */}
+          {currentView === 'minutes' ? (
+            <button
+              onClick={onPrintMinutes}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[#00A3E0] hover:bg-[#008fc7] text-white rounded-lg text-xs font-bold transition-colors shadow-xs"
+              title="Imprimir ou Salvar Ata em PDF"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>Imprimir / Salvar PDF</span>
+            </button>
+          ) : (
+            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-[#002860] border border-sky-400/30 rounded-lg text-xs text-sky-100">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-sky-200">Progresso {currentArea}:</span>
+              <span className="font-mono font-bold text-white">
+                {completedVotesCount}/{totalChangesCount}
+              </span>
+            </div>
+          )}
+
           {/* Area Selector Dropdown */}
           <div className="relative">
             <button
@@ -67,7 +112,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <div className="flex flex-col text-right">
                 <span className="text-[10px] text-sky-200 uppercase tracking-wider font-semibold">
-                  Representando Área:
+                  Área Votante:
                 </span>
                 <span className="font-mono text-xs font-bold text-white flex items-center justify-end gap-1">
                   <span>{currentArea}</span>

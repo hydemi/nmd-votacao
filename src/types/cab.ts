@@ -98,6 +98,25 @@ export interface RollbackPlan {
 
 export type Criticidade = 'Crítica' | 'Alta' | 'Média' | 'Padrão';
 
+export type RelevanciaRisco = 'Baixa' | 'Média' | 'Alta' | 'Estratégica';
+export type ClassificacaoRisco = 'Risco Baixo' | 'Risco Moderado' | 'Risco Elevado' | 'Risco Extremo';
+
+export interface RiskAssessment {
+  relevancia: RelevanciaRisco;
+  severidade: number; // 1 a 5
+  probabilidade: number; // 1 a 5
+  nivelRisco: number; // severidade * probabilidade (1 a 25)
+  classificacaoRisco: ClassificacaoRisco;
+  justificativaRisco: string;
+}
+
+export interface ImplementationSchedule {
+  dataPrevista: string;
+  areaNegocial: string;
+  areaTecnica: string;
+  areasExecutoras: string[];
+}
+
 export interface ChangeRequest {
   id: string;
   titulo: string;
@@ -114,4 +133,28 @@ export interface ChangeRequest {
   rollback: RollbackPlan;
   votos: Record<CABArea, AreaVote>;
   conflitoDetectado?: string;
+  analiseRisco: RiskAssessment;
+  agendaExecutiva: ImplementationSchedule;
+}
+
+export interface MeetingRepresentative {
+  area: CABArea;
+  nome: string;
+  cargo: string;
+  presencaConfirmada: boolean;
+  horarioRegistro: string;
+}
+
+export interface CABMeetingMinutes {
+  numeroAta: string;
+  ano: number;
+  dataRealizacao: string;
+  horarioInicio: string;
+  horarioTermino: string;
+  local: string;
+  coordenadorGeral: string;
+  secretarioExecutivo: string;
+  pauta: string;
+  representantes: MeetingRepresentative[];
+  parecerGeral: string;
 }

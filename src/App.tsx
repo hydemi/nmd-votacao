@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { CABArea, ChangeRequest, VoteType } from './types/cab';
+import { CABArea, ChangeRequest, VoteType, CABMeetingMinutes } from './types/cab';
 import { INITIAL_CHANGES } from './data/mockChanges';
+import { INITIAL_MEETING_MINUTES } from './data/mockMeetingMinutes';
 import { Header } from './components/Header';
 import { PrototypeSpeedQueue } from './components/PrototypeSpeedQueue';
+import { CABMeetingMinutesView } from './components/CABMeetingMinutesView';
 import { VoteModal } from './components/VoteModal';
 import { Check, AlertTriangle, X } from 'lucide-react';
 
 export default function App() {
   const [changes, setChanges] = useState<ChangeRequest[]>(INITIAL_CHANGES);
   const [currentArea, setCurrentArea] = useState<CABArea>('GEMUD');
+  const [currentView, setCurrentView] = useState<'triage' | 'minutes'>('triage');
+  const [meetingMinutes, setMeetingMinutes] = useState<CABMeetingMinutes>(INITIAL_MEETING_MINUTES);
   
   // Modals state
   const [voteModalChange, setVoteModalChange] = useState<ChangeRequest | null>(null);
@@ -57,13 +61,19 @@ export default function App() {
     showToast(`Voto ${voteDescriptions[vote]} de ${area} registrado com sucesso para ${changeId}!`, type);
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   // Metrics
   const pendingVotesCount = changes.filter(c => c.votos[currentArea]?.vote === 'pendente').length;
 
   return (
-    <div className="min-h-screen bg-slate-100 font-sans text-slate-900 flex flex-col selection:bg-indigo-500/20 selection:text-indigo-900">
+    <div className="min-h-screen bg-[#F2F6FA] font-sans text-slate-900 flex flex-col selection:bg-[#003882]/20 selection:text-[#003882]">
       {/* Header */}
       <Header
+        currentView={currentView}
+        onViewChange={setCurrentView}
         currentArea={currentArea}
         onAreaChange={(newArea) => {
           setCurrentArea(newArea);
@@ -71,21 +81,30 @@ export default function App() {
         }}
         pendingVotesCount={pendingVotesCount}
         totalChangesCount={changes.length}
+        onPrintMinutes={handlePrint}
       />
 
-      {/* Main Fila Rápida (Speed Triage) Viewport */}
+      {/* Main Content Area */}
       <main className="flex-1">
-        <PrototypeSpeedQueue
-          changes={changes}
-          currentArea={currentArea}
-          onSaveVote={handleSaveVote}
-          onOpenVoteModal={(change) => setVoteModalChange(change)}
-        />
+        {currentView === 'triage' ? (
+          <PrototypeSpeedQueue
+            changes={changes}
+            currentArea={currentArea}
+            onSaveVote={handleSaveVote}
+            onOpenVoteModal={(change) => setVoteModalChange(change)}
+          />
+        ) : (
+          <CABMeetingMinutesView
+            minutes={meetingMinutes}
+            changes={changes}
+            onPrint={handlePrint}
+          />
+        )}
       </main>
 
-      {/* Floating Toast Notification */}
+      {/* Floating Toast Notification (Hidden in print) */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 animate-in fade-in slide-in-from-bottom-2 duration-200">
+        <div className="fixed bottom-5 right-5 z-50 animate-in fade-in slide-in-from-bottom-2 duration-200 print:hidden">
           <div className={`px-4 py-3 rounded-lg shadow-xl border text-xs font-semibold flex items-center gap-2.5 backdrop-blur-md ${
             toastMessage.type === 'success'
               ? 'bg-emerald-50 text-emerald-900 border-emerald-300'
@@ -101,7 +120,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Voting Modal with Technical Justification / Ressalva */}
+      {/* Voting Modal */}
       {voteModalChange && (
         <VoteModal
           isOpen={!!voteModalChange}
